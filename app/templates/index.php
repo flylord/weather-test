@@ -36,8 +36,40 @@
       return $(jqForm).valid();
     }
 
-    function cityWeatherResponse(responseText, statusText, xhr, $form) {
+    function cityWeatherResponse(response, statusText, xhr, $form) {
 
+      let container = $('#results');
+
+      if (!$.isEmptyObject(response) && !$.isEmptyObject(response.weather)) {
+
+        $.each(response.weather, function(index, data) {
+          console.log(data);
+          let mainDiv = $('<div/>');
+
+          let cityHeader = $('<h5/>').append('City Data');
+          $(cityHeader).appendTo(mainDiv);
+
+          let cityContainer = $('<span/>').append( '<strong>City: </strong>' + data.city.name + ' | ' + '<strong>Contry: </strong>' + data.city.country );
+          $(cityContainer).appendTo(mainDiv);
+
+
+          let weatherHeader = $('<h5/>').append('Weather Data for: ' + data.weather.current_weather.time);
+          $(weatherHeader).appendTo(mainDiv);
+
+          let ul = $('<ul/>').appendTo(mainDiv);
+          $('<li/>').append('<strong>Current temperature: </strong>' + data.weather.current_weather.temperature).appendTo(ul);
+          $('<li/>').append('<strong>Wind direction: </strong>' + data.weather.current_weather.winddirection).appendTo(ul);
+          $('<li/>').append('<strong>Wind speed: </strong>' + data.weather.current_weather.windspeed).appendTo(ul);
+
+          // $(ul).appendTo(mainDiv);
+
+
+          let seperator = $('<hr/>');
+          $(seperator).appendTo(mainDiv);
+
+          $(mainDiv).appendTo(container);
+        });
+      }
     }
 
     function cityWeatherError() {
@@ -46,8 +78,6 @@
 
     $('#weather_get_btn').click(function (e) {
       e.preventDefault();
-
-      console.log(1);
 
       var options = {
         // target: '#results',   // target element(s) to be updated with server response

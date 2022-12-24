@@ -15,5 +15,4 @@ abstract class Controller {
     $this->request = $request;
   }
 
-
 }

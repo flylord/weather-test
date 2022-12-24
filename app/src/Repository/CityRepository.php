@@ -11,7 +11,7 @@ final class CityRepository extends Repository {
   public function findSimilar(string $name): CityCollection {
     $cities = [];
 
-    $sql = "SELECT id, name, lat, lng, country FROM cities WHERE name SOUNDS LIKE :name LIMIT 0, 2";
+    $sql = "SELECT id, name, lat, lng, country FROM cities WHERE name SOUNDS LIKE :name";
     $stmt = $this->db->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $stmt->bindValue(':name', $name);
 
