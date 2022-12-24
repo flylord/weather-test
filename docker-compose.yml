@@ -1,0 +1,71 @@
+version: '3.3'
+services:
+
+  web:
+    build:
+      context: .
+      args:
+        UID: 1000
+        GID: 1000
+        USER: web
+      dockerfile: ./Dockers/Dockerfile-php
+    restart: on-failure
+    volumes:
+      - './app:/var/www/html:rw'
+      - "./storage:/var/tmp:rw"
+    ports:
+      - '8110:80'
+    networks:
+      - internal
+    user: 1000:1000
+
+  db:
+    build:
+      context: .
+      dockerfile: ./Dockers/Dockerfile-mysql
+    restart: always
+    command: mysqld --general-log=1 --general-log-file=/var/log/mysql/mysql-query-log.log
+    volumes:
+      - "./mysql:/var/lib/mysql"
+      - "./storage:/var/tmp:rw"
+      - "./Dockers-logs:/var/log/mysql:rw"
+#      - "./storage/init-script.sql:/docker-entrypoint-initdb.d/init-script.sql"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: weather
+    ports:
+#      - "6110:3306"
+      - "6000:3306"
+    networks:
+      - internal
+    user: 1000:1000
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8111:80"
+    environment:
+      - PMA_ARBITRARY=1
+
+  composer:
+    restart: 'no'
+    image: composer:2.3.9
+    command: composer install
+    volumes:
+      - './app:/app:rw'
+    user: 1000:1000
+
+  npm:
+    build:
+      context: .
+      dockerfile: ./Dockers/Dockerfile-node
+    restart: 'no'
+    command: npm install
+    volumes:
+      - './app/assets/:/app:rw'
+    user: 1000:1000
+
+
+networks:
+  internal:

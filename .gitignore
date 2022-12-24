@@ -1,0 +1,10 @@
+
+/.idea/*
+
+/mysql/*
+!mysql/.gitkeep
+
+/Dockers-logs/*
+!Dockers-logs/.gitkeep
+/app/vendor/
+/app/assets/node_modules/

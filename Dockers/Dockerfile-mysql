@@ -1,0 +1,6 @@
+FROM mysql:8.0.29-debian
+
+RUN apt-get update -y && apt-get install -y mc vim
+
+
+EXPOSE 3306

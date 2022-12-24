@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "jquery": "^3.6.1",
+    "jquery-form": "^4.3.0",
+    "jquery-ui": "^1.13.2",
+    "jquery-validation": "^1.19.5"
+  }
+}
