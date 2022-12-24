@@ -39,6 +39,7 @@
     function cityWeatherResponse(response, statusText, xhr, $form) {
 
       let container = $('#results');
+      $(container).html('');
 
       if (!$.isEmptyObject(response) && !$.isEmptyObject(response.weather)) {
 
@@ -46,22 +47,19 @@
           console.log(data);
           let mainDiv = $('<div/>');
 
-          let cityHeader = $('<h5/>').append('City Data');
-          $(cityHeader).appendTo(mainDiv);
+          $('<h5/>').append('Current Weather Data for: ' + data.city.name + ' | ' + 'Contry: ' + data.city.country + ' at date/time ' + data.weather.current_weather.time).appendTo(mainDiv);
 
-          let cityContainer = $('<span/>').append( '<strong>City: </strong>' + data.city.name + ' | ' + '<strong>Contry: </strong>' + data.city.country );
-          $(cityContainer).appendTo(mainDiv);
+          let current = $('<ul/>').appendTo(mainDiv);
+          $('<li/>').append('<strong>Current temperature: </strong>' + data.weather.current_weather.temperature + data.weather.daily_units.temperature_2m_max).appendTo(current);
+          $('<li/>').append('<strong>Wind direction: </strong>' + data.weather.current_weather.winddirection).appendTo(current);
+          $('<li/>').append('<strong>Wind speed: </strong>' + data.weather.current_weather.windspeed + data.weather.daily_units.windspeed_10m_max).appendTo(current);
 
-
-          let weatherHeader = $('<h5/>').append('Weather Data for: ' + data.weather.current_weather.time);
-          $(weatherHeader).appendTo(mainDiv);
-
-          let ul = $('<ul/>').appendTo(mainDiv);
-          $('<li/>').append('<strong>Current temperature: </strong>' + data.weather.current_weather.temperature).appendTo(ul);
-          $('<li/>').append('<strong>Wind direction: </strong>' + data.weather.current_weather.winddirection).appendTo(ul);
-          $('<li/>').append('<strong>Wind speed: </strong>' + data.weather.current_weather.windspeed).appendTo(ul);
-
-          // $(ul).appendTo(mainDiv);
+          $('<h5/>').append('Percipation Data').appendTo(mainDiv);
+          let percipation = $('<ul/>').appendTo(mainDiv);
+          $.each(data.weather.daily.time, function(idx, date) {
+            let perc = data.weather.daily.precipitation_sum[idx];
+            $('<li/>').append('<strong>Percipation is </strong>' + perc + data.weather.daily_units.precipitation_sum + ' for date: ' + date).appendTo(percipation);
+          });
 
 
           let seperator = $('<hr/>');
