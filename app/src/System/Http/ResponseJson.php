@@ -2,7 +2,7 @@
 
 namespace App\System\Http;
 
-class ResponseJson implements Response {
+final class ResponseJson implements Response {
   private array $data;
 
   /**

@@ -7,7 +7,7 @@ use App\System\Attributes\Route;
 use ReflectionClass;
 use ReflectionMethod;
 
-class Router {
+final class Router {
 
   private array $routes = [];
   private array $classes = [];

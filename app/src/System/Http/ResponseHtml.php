@@ -5,7 +5,7 @@ namespace App\System\Http;
 use App\Exceptions\TemplateNotExist;
 use Config;
 
-class ResponseHtml implements Response {
+final class ResponseHtml implements Response {
 
   private string $template;
   private array $data;

@@ -2,18 +2,29 @@
 
 namespace App\Services;
 
+use App\Api\WeatherServiceInterface;
+use App\Collections\CityCollection;
+
 class WeatherService {
 
-  public function __construct(private readonly WeatherServiceInterface $meteoService) {
+  public function __construct(private readonly WeatherServiceInterface $ws) {
   }
 
   public function get(float $lat, float $lon): array {
-    return $this->meteoService->get($lat, $lon);
+    return $this->ws->get($lat, $lon);
   }
 
-  public function getByCities(array $cities): array {
+  public function getByCities(CityCollection $cities): array {
+    $data = [];
 
-    return [];
+    foreach ($cities as $city) {
+      $data[] = [
+        'city' => $city,
+        'weather' => $this->get($city->getLat(), $city->getLng()),
+      ];
+    }
+
+    return $data;
   }
 
 }

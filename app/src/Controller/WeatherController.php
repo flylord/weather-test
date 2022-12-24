@@ -2,28 +2,30 @@
 
 namespace App\Controller;
 
-use App\Services\CityFactory;
+use App\Repository\CityFactory;
 use App\Services\WeatherFactory;
 use App\System\Attributes\Route;
 use App\System\Http\ResponseJson;
 
-class WeatherController {
+final class WeatherController {
 
   #[Route('/weather/get', methods: ['GET'])]
   public function get(): ResponseJson {
     $args = [];
 
+    /*
+     * TODO: sanitize && validate
+     */
     $cityName = $_GET['city'];
 
     $cs = CityFactory::get();
     $ws = WeatherFactory::get();
 
-    $cities = $cs->find($cityName);
-    var_dump($cities);
-
-    $args['weather'] = $ws->get(51.51, -0.13);
-
-    die();
+    $cities = $cs->findSimilar($cityName);
+    $args['weather'] = $ws->getByCities($cities);
+//    var_dump($args['weather']);
+//
+//    die();
 
     return new ResponseJson($args);
   }
