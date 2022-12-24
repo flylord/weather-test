@@ -6,7 +6,7 @@ use App\System\Attributes\Route;
 use App\System\Http\Response;
 use App\System\Http\ResponseHtml;
 
-final class IndexController {
+final class IndexController extends Controller {
 
   #[Route('/', methods: ['GET'])]
   public function index(): Response {

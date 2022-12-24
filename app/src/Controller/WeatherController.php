@@ -7,7 +7,7 @@ use App\Services\WeatherFactory;
 use App\System\Attributes\Route;
 use App\System\Http\ResponseJson;
 
-final class WeatherController {
+final class WeatherController extends Controller {
 
   #[Route('/weather/get', methods: ['GET'])]
   public function get(): ResponseJson {
@@ -16,16 +16,13 @@ final class WeatherController {
     /*
      * TODO: sanitize && validate
      */
-    $cityName = $_GET['city'];
+    $cityName = $this->request->get('city');
 
     $cs = CityRepositoryFactory::get();
     $ws = WeatherFactory::get();
 
     $cities = $cs->findSimilar($cityName);
     $args['weather'] = $ws->getByCities($cities);
-//    var_dump($args['weather']);
-//
-//    die();
 
     return new ResponseJson($args);
   }

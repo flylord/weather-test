@@ -5,6 +5,7 @@ namespace App\System\Http;
 use App\Exceptions\NotFoundException;
 use App\System\Attributes\Route;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionMethod;
 
 final class Router {
@@ -20,14 +21,19 @@ final class Router {
   }
 
   private function init(string $class): void {
-    $R = new ReflectionClass($class);
-    $methods = $R->getMethods(ReflectionMethod::IS_PUBLIC);
-    foreach ($methods as $method) {
-      $attribs = $method->getAttributes(Route::class);
-      foreach ($attribs as $attribute) {
-        $route = $attribute->newInstance();
-        $this->routes[$route->getPath()] = ['class' => $class, 'method' => $method->getName()];
+    try {
+      $R = new ReflectionClass($class);
+      $methods = $R->getMethods(ReflectionMethod::IS_PUBLIC);
+      foreach ($methods as $method) {
+        $attribs = $method->getAttributes(Route::class);
+        foreach ($attribs as $attribute) {
+          $route = $attribute->newInstance();
+          $this->routes[$route->getPath()] = ['class' => $class, 'method' => $method->getName()];
+        }
       }
+
+    } catch (ReflectionException) {
+      throw new NotFoundException();
     }
   }
 
@@ -38,12 +44,16 @@ final class Router {
       throw new NotFoundException();
     }
 
-    $controller = (new ReflectionClass($this->routes[$path]['class']))->newInstance();
+    try {
+      $controller = (new ReflectionClass($this->routes[$path]['class']))->newInstance(Request::init());
 
-    $view = call_user_func([$controller, $this->routes[$path]['method']]);
-    $view->header();
-    echo $view->show();
+      $view = call_user_func([$controller, $this->routes[$path]['method']]);
+      $view->header();
+      echo $view->show();
+
+    } catch (ReflectionException) {
+      throw new NotFoundException();
+    }
   }
-
 
 }
