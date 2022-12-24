@@ -1,6 +1,6 @@
 <?php
 
-namespace App\System;
+namespace App\System\Http;
 
 use App\Exceptions\NotFoundException;
 use App\System\Attributes\Route;
@@ -32,14 +32,16 @@ class Router {
   }
 
   public function run(): void {
-    $uri = $_SERVER['REQUEST_URI'];
-    if (!isset($this->routes[$uri])) {
+    $uri = parse_url($_SERVER['REQUEST_URI']);
+    $path = $uri['path'];
+    if (!isset($this->routes[$path])) {
       throw new NotFoundException();
     }
 
-    $controller = (new ReflectionClass($this->routes[$uri]['class']))->newInstance();
+    $controller = (new ReflectionClass($this->routes[$path]['class']))->newInstance();
 
-    $view = call_user_func([$controller, $this->routes[$uri]['method']]);
+    $view = call_user_func([$controller, $this->routes[$path]['method']]);
+    $view->header();
     echo $view->show();
   }
 

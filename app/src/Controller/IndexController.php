@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\System\Attributes\Route;
-use App\System\Response;
-use App\System\ResponseHtml;
+use App\System\Http\Response;
 
 class IndexController {
 

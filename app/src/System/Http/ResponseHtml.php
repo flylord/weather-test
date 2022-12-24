@@ -1,6 +1,6 @@
 <?php
 
-namespace App\System;
+namespace App\System\Http;
 
 use App\Exceptions\TemplateNotExist;
 
@@ -18,7 +18,6 @@ class ResponseHtml implements Response {
     $this->data = $data;
   }
 
-
   public function show(): string {
     $template = \Config::ROOT_DIR . '/templates/' . $this->template . '.php';
     if (!file_exists($template)) {
@@ -33,4 +32,9 @@ class ResponseHtml implements Response {
 
     return $response;
   }
+
+  public function header(): void {
+
+  }
+
 }
