@@ -29,7 +29,7 @@ services:
       - "./mysql:/var/lib/mysql"
       - "./storage:/var/tmp:rw"
       - "./Dockers-logs:/var/log/mysql:rw"
-#      - "./storage/init-script.sql:/docker-entrypoint-initdb.d/init-script.sql"
+      - "./storage/weather.sql:/docker-entrypoint-initdb.d/init-script.sql"
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: weather
