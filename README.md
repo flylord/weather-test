@@ -2,7 +2,7 @@
 
 TODO:
 - Exception handling
-- Handling of methods in controllers
+- Handling of http methods in controllers
 
 USAGE:
 
