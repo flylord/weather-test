@@ -13,7 +13,7 @@ final class WeatherController extends Controller {
   public const ERR_EMPTY_CITY = 1;
   public const ERR_EMPTY_CITIES = 2;
 
-  #[Route('/weather/get', methods: ['GET'])]
+  #[Route('/weather/get')]
   public function get(): ResponseJson {
     $args = [];
 

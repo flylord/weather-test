@@ -8,7 +8,7 @@ use App\System\Http\ResponseHtml;
 
 final class IndexController extends Controller {
 
-  #[Route('/', methods: ['GET'])]
+  #[Route('/')]
   public function index(): Response {
     $args = [];
 

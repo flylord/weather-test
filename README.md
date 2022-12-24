@@ -2,7 +2,6 @@
 
 TODO:
 - Exception handling
-- Handling of http methods in controllers
 - tests
 - Loader for waiting ajax to finish
 
