@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\CityFactory;
+use App\Repository\CityRepositoryFactory;
 use App\Services\WeatherFactory;
 use App\System\Attributes\Route;
 use App\System\Http\ResponseJson;
@@ -18,7 +18,7 @@ final class WeatherController {
      */
     $cityName = $_GET['city'];
 
-    $cs = CityFactory::get();
+    $cs = CityRepositoryFactory::get();
     $ws = WeatherFactory::get();
 
     $cities = $cs->findSimilar($cityName);

@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Api\WeatherServiceInterface;
 use App\DTO\CityCollection;
+use App\Repository\WeatherRepository;
+use DateTimeImmutable;
 
 class WeatherService {
 
-  public function __construct(private readonly WeatherServiceInterface $ws) {
+  public function __construct(private readonly WeatherServiceInterface $ws, private readonly WeatherRepository $weatherRepository) {
   }
 
   public function get(float $lat, float $lon): array {
@@ -18,9 +20,17 @@ class WeatherService {
     $data = [];
 
     foreach ($cities as $city) {
+      $cityWeatherData = $this->weatherRepository->findByTime($city->getId(), new DateTimeImmutable());
+      if ($cityWeatherData == null) {
+        $wdata = $this->get($city->getLat(), $city->getLng());
+        $this->weatherRepository->save($city->getId(), $wdata);
+      } else {
+        $wdata = (array)json_decode($cityWeatherData['wdata']);
+      }
+
       $data[] = [
         'city' => $city,
-        'weather' => $this->get($city->getLat(), $city->getLng()),
+        'weather' => $wdata,
       ];
     }
 
