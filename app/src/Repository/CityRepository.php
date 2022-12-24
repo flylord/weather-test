@@ -2,18 +2,11 @@
 
 namespace App\Repository;
 
-use App\Collections\CityCollection;
-use App\Models\City;
-use App\System\Db\DbInterface;
+use App\DTO\City;
+use App\DTO\CityCollection;
 use PDO;
 
-final class CityRepository {
-
-  private PDO $db;
-
-  public function __construct(DbInterface $db) {
-    $this->db = $db->connect();
-  }
+final class CityRepository extends Repository {
 
   public function findSimilar(string $name): CityCollection {
     $cities = [];

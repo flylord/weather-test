@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Collections;
+namespace App\DTO;
 
-use App\Models\City;
 use Countable;
 use Iterator;
 

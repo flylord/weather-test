@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Api\WeatherServiceInterface;
-use App\Collections\CityCollection;
+use App\DTO\CityCollection;
 
 class WeatherService {
 
