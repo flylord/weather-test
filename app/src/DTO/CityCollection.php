@@ -38,7 +38,7 @@ final class CityCollection implements Countable, Iterator {
   }
 
   public function count(): int {
-    return count($this->list);
+    return count($this->cities);
   }
 
 }
