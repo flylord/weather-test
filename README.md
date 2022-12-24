@@ -23,7 +23,7 @@ After starting, point your browser to an url:
 http://localhost:8110/
 ```
 
-Database sql file is in 
+Database sql file is in. 
 ```
 ./storage/weather.sql
 ```

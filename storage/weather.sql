@@ -27,7 +27,6 @@ SET time_zone = "+00:00";
 -- Table structure for table `cities`
 --
 
-use weather;
 
 CREATE TABLE `cities` (
   `id` int NOT NULL,
