@@ -1,9 +1,14 @@
 <?php
 
+namespace App\Services;
+
 class OpenMeteo implements WeatherServiceInterface {
 
+  private const URL = 'https://api.open-meteo.com/v1/forecast';
+
   public function api(float $lat, float $lon): string {
-    $url = 'https://api.open-meteo.com/v1/forecast?latitude=51.51&longitude=-0.13&hourly=temperature_2m';
+//    $url = 'https://api.open-meteo.com/v1/forecast?latitude=51.51&longitude=-0.13&hourly=temperature_2m';
+    $url = self::URL . '?' . http_build_query([ 'latitude' => $lat, 'longitude' => $lon ]);
 
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
@@ -15,9 +20,9 @@ class OpenMeteo implements WeatherServiceInterface {
   }
 
   public function get(float $lat, float $lon): array {
-    $response = $this->api($lat, $lon);
+    $response = (array)json_decode($this->api($lat, $lon));
 
-    return json_decode($response);
+    return $response;
   }
 
 }

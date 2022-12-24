@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Services;
+
 interface WeatherServiceInterface {
 
   public function api(float $lat, float $lon): string;

@@ -3,6 +3,7 @@
 namespace App\System\Http;
 
 use App\Exceptions\TemplateNotExist;
+use Config;
 
 class ResponseHtml implements Response {
 
@@ -19,7 +20,7 @@ class ResponseHtml implements Response {
   }
 
   public function show(): string {
-    $template = \Config::ROOT_DIR . '/templates/' . $this->template . '.php';
+    $template = Config::ROOT_DIR . '/templates/' . $this->template . '.php';
     if (!file_exists($template)) {
       throw new TemplateNotExist();
     }

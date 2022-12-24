@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
-class TemplateNotExist extends \Exception {
+use Exception;
+
+class TemplateNotExist extends Exception {
 
 }

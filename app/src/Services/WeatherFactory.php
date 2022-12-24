@@ -1,8 +1,10 @@
 <?php
 
+namespace App\Services;
+
 class WeatherFactory {
 
-  public function get(): WeatherServiceInterface {
+  public static function get(): WeatherService {
     return new WeatherService(new OpenMeteo());
   }
 

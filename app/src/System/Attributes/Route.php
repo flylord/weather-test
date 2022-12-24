@@ -16,7 +16,7 @@ class Route {
    */
   public function __construct(string $path, string $name = null, array $methods = []) {
     $this->path = $path;
-    $this->name = $this->name;
+    $this->name = $name;
     $this->setMethods($methods);
   }
 
@@ -34,7 +34,7 @@ class Route {
     return $this->name;
   }
 
-  public function setMethods(array $methods = []) {
+  public function setMethods(array $methods = []): void {
     $this->methods = $methods;
   }
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\System\Attributes\Route;
 use App\System\Http\Response;
+use App\System\Http\ResponseHtml;
 
 class IndexController {
 
