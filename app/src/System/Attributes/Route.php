@@ -42,5 +42,4 @@ final class Route {
     return $this->methods;
   }
 
-
 }

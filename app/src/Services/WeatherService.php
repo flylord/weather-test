@@ -20,10 +20,10 @@ class WeatherService {
     $data = [];
 
     foreach ($cities as $city) {
-      $cityWeatherData = $this->weatherRepository->findByTime($city->getId(), new DateTimeImmutable());
+      $cityWeatherData = $this->weatherRepository->findByTime($city, new DateTimeImmutable());
       if ($cityWeatherData == null) {
         $wdata = $this->get($city->getLat(), $city->getLng());
-        $this->weatherRepository->save($city->getId(), $wdata);
+        $this->weatherRepository->save($city, $wdata);
       } else {
         $wdata = (array)json_decode($cityWeatherData['wdata']);
       }

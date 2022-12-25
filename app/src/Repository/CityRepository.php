@@ -24,14 +24,14 @@ final class CityRepository extends Repository {
           $cities[] = City::init($rs);
         }
       }
-    }
-    usort($cities, function (City $a, City $b) {
-      if ($a->getLevenshtein() == $b->getLevenshtein()) {
-        return 0;
-      }
+      usort($cities, function (City $a, City $b) {
+        if ($a->getLevenshtein() == $b->getLevenshtein()) {
+          return 0;
+        }
 
-      return ($a->getLevenshtein() < $b->getLevenshtein()) ? -1 : 1;
-    });
+        return ($a->getLevenshtein() < $b->getLevenshtein()) ? -1 : 1;
+      });
+    }
 
     return new CityCollection($cities);
   }
