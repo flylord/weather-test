@@ -7,7 +7,7 @@ use App\DTO\CityCollection;
 use App\Repository\WeatherRepository;
 use DateTimeImmutable;
 
-class WeatherService {
+final class WeatherService {
 
   public function __construct(private readonly WeatherServiceInterface $ws, private readonly WeatherRepository $weatherRepository) {
   }
